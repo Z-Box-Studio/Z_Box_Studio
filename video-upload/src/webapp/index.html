@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>آپلود ویدیو</title>
+</head>
+<body>
+    <h1>آپلود ویدیو</h1>
+    <form action="upload" method="post" enctype="multipart/form-data">
+        <label for="video">انتخاب ویدیو:</label>
+        <input type="file" id="video" name="video" accept="video/*">
+        <button type="submit">آپلود</button>
+    </form>
+    <h2>ویدیوهای آپلود شده</h2>
+    <div id="videos">
+        <!-- ویدیوهای آپلود شده اینجا نمایش داده خواهند شد -->
+    </div>
+    <script>
+        async function fetchVideos() {
+            const response = await fetch('videos');
+            const videos = await response.json();
+            const videosDiv = document.getElementById('videos');
+            videosDiv.innerHTML = '';
+            videos.forEach(video => {
+                const videoElement = document.createElement('video');
+                videoElement.src = video.url;
+                videoElement.controls = true;
+                videosDiv.appendChild(videoElement);
+            });
+        }
+        fetchVideos();
+    </script>
+</body>
+</html>
